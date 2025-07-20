@@ -16,7 +16,8 @@ class Player:
 
         self.image = pygame.image.load(player_cfg.player_sprite).convert_alpha()
         self.image = pygame.transform.scale(self.image, (player_cfg.width, player_cfg.height))
-        self.rect = self.image.get_rect(center=self.pos)
+        self.image_copy = self.image
+        self.rect = self.image_copy.get_rect(center=self.pos)
 
 
 
@@ -39,17 +40,18 @@ class Player:
         
 
     def update(self, delta_time):
-        #mouse_pos = pygame.mouse.get_pos()
-        #direction_x = mouse_pos.x - self.pos.x
-        #direction_y = mouse_pos.y - self.pos.y
-        #angle_rad = math.atan2(direction_y, direction_x)
-        #angle_deg = math.degrees(angle_rad)
-        #self.rotation = angle_deg
-        self.rect = self.image.get_rect(center=self.pos)
+        mouse_x, mouse_y = pygame.mouse.get_pos()
+        dx = mouse_x - self.pos.x
+        dy = mouse_y - self.pos.y
+
+        angle_rad = math.atan2(dx, -dy)
+        self.rotation = math.degrees(angle_rad) % 360
+
+        self.image_copy = pygame.transform.rotate(self.image, -self.rotation)
+        self.rect = self.image_copy.get_rect(center=self.pos)
 
     def draw(self, screen):
-        screen.blit(self.image, self.rect)
-        #pygame.draw.rect(screen, player_cfg.color, (self.pos.x, self.pos.y, self.width, self.height))
+        screen.blit(self.image_copy, self.rect)
 
     def spawn_echo(self):
         if self.echo_object_spawned and self.echo_obj :
