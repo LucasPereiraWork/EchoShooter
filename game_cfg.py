@@ -5,7 +5,7 @@ window_width = 1920
 window_height = 1080
 window_title = "Echo Shooter"
 # Game settings
-game_framerate = 180 # Frames per second this is default
+game_framerate = 60 # Frames per second this is default
 
 #Game Objects lists
 instanced_objects = []  # List to hold game objects
