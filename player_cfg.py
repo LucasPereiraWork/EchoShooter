@@ -8,3 +8,4 @@ height = 30
 speed = 100
 color = Color(0, 255, 0)
 default_rotation = 0
+player_sprite = "Resources/Sprites/Player/PlayerPrototype.png"

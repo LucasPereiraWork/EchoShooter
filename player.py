@@ -1,31 +1,35 @@
 # This module defines the Player class, which represents a player in the game.
 
-from typing import KeysView
+
 import pygame
 import echo
 import player_cfg
 import game_cfg
+import math
 
 class Player:
     def __init__(self, pos):
-        self.pos = pos
-        self.speed = player_cfg.speed
-        self.width = player_cfg.width
-        self.height = player_cfg.height
+        self.pos = pygame.Vector2(pos)
         self.rotation = player_cfg.default_rotation
         self.echo_object_spawned = False
         self.echo_obj = None
 
+        self.image = pygame.image.load(player_cfg.player_sprite).convert_alpha()
+        self.image = pygame.transform.scale(self.image, (player_cfg.width, player_cfg.height))
+        self.rect = self.image.get_rect(center=self.pos)
+
+
+
     def handle_events(self, delta_time):
         keys = pygame.key.get_pressed()
         if keys[pygame.K_a]:
-            self.pos.x -= self.speed * delta_time
+            self.pos.x -= player_cfg.speed * delta_time
         if keys[pygame.K_d]:
-            self.pos.x += self.speed * delta_time
+            self.pos.x += player_cfg.speed * delta_time
         if keys[pygame.K_w]:
-            self.pos.y -= self.speed * delta_time
+            self.pos.y -= player_cfg.speed * delta_time
         if keys[pygame.K_s]:
-            self.pos.y += self.speed * delta_time
+            self.pos.y += player_cfg.speed * delta_time
         if keys[pygame.K_e]:
             self.spawn_echo()
         if keys[pygame.K_SPACE]:
@@ -35,10 +39,17 @@ class Player:
         
 
     def update(self, delta_time):
-        pass    
+        #mouse_pos = pygame.mouse.get_pos()
+        #direction_x = mouse_pos.x - self.pos.x
+        #direction_y = mouse_pos.y - self.pos.y
+        #angle_rad = math.atan2(direction_y, direction_x)
+        #angle_deg = math.degrees(angle_rad)
+        #self.rotation = angle_deg
+        self.rect = self.image.get_rect(center=self.pos)
 
     def draw(self, screen):
-        pygame.draw.rect(screen, player_cfg.color, (self.pos.x, self.pos.y, self.width, self.height))
+        screen.blit(self.image, self.rect)
+        #pygame.draw.rect(screen, player_cfg.color, (self.pos.x, self.pos.y, self.width, self.height))
 
     def spawn_echo(self):
         if self.echo_object_spawned and self.echo_obj :

@@ -5,7 +5,7 @@ import echo_cfg
 
 class Echo:
     def __init__(self,pos):
-        self.pos = pos
+        self.pos = pygame.Vector2(pos)
         self.width = echo_cfg.width
         self.height = echo_cfg.height
 
