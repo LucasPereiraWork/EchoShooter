@@ -7,6 +7,11 @@ window_title = "Echo Shooter"
 # Game settings
 game_framerate = 60 # Frames per second this is default
 
+# Game Objects settings
+level_name = ""
+background_image = None
+background_music = None
+
 #Game Objects lists
 instanced_objects = []  # List to hold game objects
 objects_to_instace = []  # List to hold objects to be instantiated
