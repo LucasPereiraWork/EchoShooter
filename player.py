@@ -14,6 +14,8 @@ class Player:
         self.rotation = player_cfg.default_rotation
         self.echo_object_spawned = False
         self.echo_obj = None
+        self.can_shoot = True
+        self.shooting_timer = 0.0
 
         self.image = pygame.image.load(player_cfg.player_sprite).convert_alpha()
         self.image = pygame.transform.scale(self.image, (player_cfg.width, player_cfg.height))
@@ -51,6 +53,14 @@ class Player:
         self.image_copy = pygame.transform.rotate(self.image, -self.rotation)
         self.rect = self.image_copy.get_rect(center=self.pos)
 
+        if not self.can_shoot:
+            self.shooting_timer += delta_time
+            if self.shooting_timer >= player_cfg.shooting_interval:
+                self.can_shoot = True
+                self.shooting_timer = 0.0
+
+
+
     def draw(self, screen):
         screen.blit(self.image_copy, self.rect)
 
@@ -62,7 +72,10 @@ class Player:
         game_cfg.objects_to_instace.append(self.echo_obj)
 
     def shoot_weapon(self):
+        if not self.can_shoot:
+            return
         game_cfg.objects_to_instace.append(bullet.Bullet(self.pos.copy(), pygame.Vector2(pygame.mouse.get_pos()) - self.pos))
+        self.can_shoot = False
 
     def teleport(self):
         if not self.echo_obj:

@@ -4,4 +4,5 @@ width = 30
 height = 30
 speed = 100
 default_rotation = 0
+shooting_interval = 0.5
 player_sprite = "Resources/Sprites/Player/PlayerPrototype.png"

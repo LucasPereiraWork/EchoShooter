@@ -1,8 +1,8 @@
 import pygame
 
 # Window settings
-window_width = 1920
-window_height = 1080
+window_width = 1280
+window_height = 720
 window_title = "Echo Shooter"
 # Game settings
 game_framerate = 60 # Frames per second this is default
