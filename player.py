@@ -6,6 +6,7 @@ import echo
 import player_cfg
 import game_cfg
 import math
+import bullet
 
 class Player:
     def __init__(self, pos):
@@ -61,7 +62,7 @@ class Player:
         game_cfg.objects_to_instace.append(self.echo_obj)
 
     def shoot_weapon(self):
-        pass
+        game_cfg.objects_to_instace.append(bullet.Bullet(self.pos.copy(), pygame.Vector2(pygame.mouse.get_pos()) - self.pos))
 
     def teleport(self):
         if not self.echo_obj:
