@@ -4,6 +4,7 @@ import game_cfg
 import enemy
 import EnemyCfg.enemy1_l1_cfg as enemy1_l1_cfg
 import player
+import pygame
 
 class Level1Config:
     def __init__(self):
@@ -18,7 +19,7 @@ class Level1Config:
 
     def load_level(self):
         # Load the background image
-        game_cfg.background_image = self.background_image
+        game_cfg.background_image = pygame.image.load(self.background_image)
 
         game_cfg.objects_to_instace.append(player.Player(self.player_start_pos))
         

@@ -11,11 +11,19 @@ game_framerate = 60 # Frames per second this is default
 level_name = ""
 background_image = None
 background_music = None
+background_rect = None
 
 #Game Objects lists
 instanced_objects = []  # List to hold game objects
 objects_to_instace = []  # List to hold objects to be instantiated
 objects_to_remove = []  # List to hold objects to be removed
+
+def level_setup():
+    global background_image
+    global background_rect
+
+    background_image = pygame.transform.scale(background_image, (window_width, window_height))
+    background_rect = background_image.get_rect(center = (window_width / 2, window_height / 2))
 
 #Game Event loop
 def handle_events(delta_time):
@@ -49,6 +57,9 @@ def render(screen):
 
     # Clear the screen
     screen.fill((0, 0, 0))  # Black background
+
+    
+    screen.blit(background_image, background_rect)
 
     for gameobject in instanced_objects:
         gameobject.draw(screen)

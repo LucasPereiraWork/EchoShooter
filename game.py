@@ -20,6 +20,8 @@ delta_time = 0
 level_instance = level1_cfg.Level1Config()
 level_instance.load_level()
 
+game_cfg.level_setup()
+
 # Game loop
 running = True
 while running:
