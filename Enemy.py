@@ -5,7 +5,7 @@ import enemy_cfg
 import game_cfg
 
 class Enemy:
-    def __init__(self, pos):
+    def __init__(self, pos, cfg):
         self.pos = pygame.Vector2(pos)
         self.image = pygame.image.load(enemy_cfg.enemy_sprite).convert_alpha()
         self.image = pygame.transform.scale(self.image, (enemy_cfg.width, enemy_cfg.height))
