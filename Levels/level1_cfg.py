@@ -2,7 +2,8 @@
 
 import game_cfg
 import enemy
-import enemy1_l1_cfg
+import EnemyCfg.enemy1_l1_cfg as enemy1_l1_cfg
+import player
 
 class Level1Config:
     def __init__(self):
@@ -18,6 +19,8 @@ class Level1Config:
     def load_level(self):
         # Load the background image
         game_cfg.background_image = self.background_image
+
+        game_cfg.objects_to_instace.append(player.Player(self.player_start_pos))
         
         # Load enemies at specified spawn positions
         for pos in self.enemy_spawn_positions:
@@ -27,4 +30,4 @@ class Level1Config:
         game_cfg.load_music(self.level_music)
         
         # Set level name
-        game_cfg.current_level_name = self.level_name
+        game_cfg.level_name = self.level_name

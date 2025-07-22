@@ -55,3 +55,6 @@ def render(screen):
 
     # Update the display
     pygame.display.flip()
+
+def load_music(music):
+    pass

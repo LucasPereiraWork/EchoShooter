@@ -3,6 +3,7 @@
 import pygame
 import player
 import game_cfg
+import Levels.level1_cfg as level1_cfg
 
 # Initialize Pygame
 pygame.init()
@@ -16,8 +17,8 @@ game_clock = pygame.time.Clock()
 delta_time = 0
 
 # Load level
-player_instance = player.Player(pygame.Vector2(game_cfg.window_width / 2, game_cfg.window_height / 2))
-game_cfg.instanced_objects.append(player_instance)
+level_instance = level1_cfg.Level1Config()
+level_instance.load_level()
 
 # Game loop
 running = True
