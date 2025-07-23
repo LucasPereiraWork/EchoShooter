@@ -9,13 +9,13 @@ import pygame
 class Level1Config:
     def __init__(self):
         self.level_name = "Level1"
-        self.background_image = "Resources/Backgrounds/Level1Prototype.png"
+        self.background_image = game_cfg.get_resource_path("Resources/Backgrounds/Level1Prototype.png")
         self.player_start_pos = (game_cfg.window_width / 2, game_cfg.window_height / 2)
         self.enemy_spawn_positions = [
             (100, 100),
         ]
         self.enemy_count = len(self.enemy_spawn_positions)
-        self.level_music = "Resources/Music/768402__sorlandal__electro-radioeffect_145.aiff"
+        self.level_music = game_cfg.get_resource_path("Resources/Music/768402__sorlandal__electro-radioeffect_145.aiff")
 
     def load_level(self):
         # Load the background image

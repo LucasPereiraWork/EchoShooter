@@ -1,4 +1,6 @@
 import pygame
+import os
+import sys
 
 # Window settings
 window_width = 1280
@@ -16,6 +18,15 @@ background_rect = None
 instanced_objects = []  # List to hold game objects
 objects_to_instace = []  # List to hold objects to be instantiated
 objects_to_remove = []  # List to hold objects to be removed
+
+def get_resource_path(relative_path):
+
+    try:
+        base_path = sys._MEIPASS
+    except Exception:
+        base_path = os.path.abspath(".") # Fallback for development
+
+    return os.path.join(base_path, relative_path)
 
 def level_setup():
     global background_image

@@ -30,7 +30,8 @@ while running:
     # Handle events
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
-            pygame.quit()
+            running = False
+            #pygame.quit()
 
     game_cfg.handle_events(delta_time)
 
