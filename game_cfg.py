@@ -10,7 +10,6 @@ game_framerate = 60 # Frames per second this is default
 # Game Objects settings
 level_name = ""
 background_image = None
-background_music = None
 background_rect = None
 
 #Game Objects lists
@@ -68,4 +67,12 @@ def render(screen):
     pygame.display.flip()
 
 def load_music(music):
-    pass
+    if not music:
+        return
+    pygame.mixer.music.load(music)
+    pygame.mixer.music.play(-1)
+
+def play_sound(sound):
+    if not sound:
+        return
+    pygame.mixer.Sound(sound).play()

@@ -15,7 +15,7 @@ class Level1Config:
             (100, 100),
         ]
         self.enemy_count = len(self.enemy_spawn_positions)
-        self.level_music = "Resources/Music/Level1.mp3"
+        self.level_music = "Resources/Music/768402__sorlandal__electro-radioeffect_145.aiff"
 
     def load_level(self):
         # Load the background image
@@ -25,7 +25,7 @@ class Level1Config:
         
         # Load enemies at specified spawn positions
         for pos in self.enemy_spawn_positions:
-            game_cfg.objects_to_instace.append(enemy.Enemy(pos, enemy1_l1_cfg.enemy_patrol_positions))
+            game_cfg.objects_to_instace.append(enemy.Enemy(pos, enemy1_l1_cfg))
         
         # Load level music
         game_cfg.load_music(self.level_music)

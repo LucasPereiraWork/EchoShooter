@@ -7,6 +7,7 @@ import Levels.level1_cfg as level1_cfg
 
 # Initialize Pygame
 pygame.init()
+pygame.mixer.init()
 
 # Create the window
 screen = pygame.display.set_mode((game_cfg.window_width, game_cfg.window_height))

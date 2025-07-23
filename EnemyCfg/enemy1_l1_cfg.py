@@ -4,3 +4,10 @@ enemy_patrol_positions = [
             (300, 200),
             (400, 250)
         ]
+
+enemy_patrol_times = [
+            5.0,
+            6.5,
+            4.0,
+            10.5
+        ]

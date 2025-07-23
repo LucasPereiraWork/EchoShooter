@@ -7,3 +7,5 @@ default_enemy_rotation = 0
 enemy_detection_radius = 200
 enemy_detection_angle = 90
 enemy_sprite = "Resources/Sprites/Enemy/EnemyPrototype.png"
+particle_count = 10
+enemy_patrol_distance_threshold = 5
