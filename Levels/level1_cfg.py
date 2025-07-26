@@ -21,11 +21,11 @@ class Level1Config:
         # Load the background image
         game_cfg.background_image = pygame.image.load(self.background_image)
 
-        game_cfg.objects_to_instace.append(player.Player(self.player_start_pos))
+        game_cfg.instanced_objects.add(player.Player(self.player_start_pos))
         
         # Load enemies at specified spawn positions
         for pos in self.enemy_spawn_positions:
-            game_cfg.objects_to_instace.append(enemy.Enemy(pos, enemy1_l1_cfg))
+            game_cfg.instanced_objects.add(enemy.Enemy(pos, enemy1_l1_cfg))
         
         # Load level music
         game_cfg.load_music(self.level_music)

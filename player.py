@@ -8,8 +8,9 @@ import game_cfg
 import math
 import bullet
 
-class Player:
+class Player(pygame.sprite.Sprite):
     def __init__(self, pos):
+        super().__init__()
         self.pos = pygame.Vector2(pos)
         self.rotation = player_cfg.default_rotation
         self.echo_object_spawned = False
@@ -17,10 +18,11 @@ class Player:
         self.can_shoot = True
         self.shooting_timer = 0.0
 
-        self.image = pygame.image.load(player_cfg.player_sprite).convert_alpha()
-        self.image = pygame.transform.scale(self.image, (player_cfg.width, player_cfg.height))
-        self.image_copy = self.image
-        self.rect = self.image_copy.get_rect(center=self.pos)
+        self.original_image = pygame.image.load(player_cfg.player_sprite).convert_alpha()
+        self.original_image = pygame.transform.scale(self.original_image, (player_cfg.width, player_cfg.height))
+        self.image = self.original_image
+        self.rect = self.image.get_rect(center=self.pos)
+        game_cfg.player_object.add(self)
 
 
 
@@ -43,15 +45,13 @@ class Player:
         
 
     def update(self, delta_time):
+
         mouse_x, mouse_y = pygame.mouse.get_pos()
-        dx = mouse_x - self.pos.x
-        dy = mouse_y - self.pos.y
-
-        angle_rad = math.atan2(dx, -dy)
-        self.rotation = math.degrees(angle_rad) % 360
-
-        self.image_copy = pygame.transform.rotate(self.image, -self.rotation)
-        self.rect = self.image_copy.get_rect(center=self.pos)
+        rel_x, rel_y = mouse_x - self.pos.x, mouse_y - self.pos.y
+        angle_rad = math.atan2(rel_y, rel_x)
+        self.rotation = (math.degrees(angle_rad) + 90) % 360
+        self.image = pygame.transform.rotate(self.original_image, -self.rotation)
+        self.rect = self.image.get_rect(center=(int(self.pos.x), int(self.pos.y)))
 
         if not self.can_shoot:
             self.shooting_timer += delta_time
@@ -61,20 +61,20 @@ class Player:
 
 
 
-    def draw(self, screen):
-        screen.blit(self.image_copy, self.rect)
+    #def draw(self, screen):
+        #screen.blit(self.image_copy, self.rect)
 
     def spawn_echo(self):
         if self.echo_object_spawned and self.echo_obj :
             return
         self.echo_object_spawned = True
         self.echo_obj = echo.Echo(self.pos.copy())
-        game_cfg.objects_to_instace.append(self.echo_obj)
+        game_cfg.instanced_objects.add(self.echo_obj)
 
     def shoot_weapon(self):
         if not self.can_shoot:
             return
-        game_cfg.objects_to_instace.append(bullet.Bullet(self.pos.copy(), pygame.Vector2(pygame.mouse.get_pos()) - self.pos))
+        game_cfg.instanced_objects.add(bullet.Bullet(self.pos.copy(), pygame.Vector2(pygame.mouse.get_pos()) - self.pos))
         self.can_shoot = False
 
     def teleport(self):
@@ -82,6 +82,9 @@ class Player:
             return
         self.pos.x = self.echo_obj.pos.x
         self.pos.y = self.echo_obj.pos.y
-        game_cfg.objects_to_remove.append(self.echo_obj)
+        self.echo_obj.kill()
         self.echo_obj = None
         self.echo_object_spawned = False
+
+    def defeated(self):
+        self.kill()

@@ -5,8 +5,9 @@ from EnemyCfg import enemy1_l1_cfg
 import enemy_cfg
 import game_cfg
 
-class Enemy:
+class Enemy(pygame.sprite.Sprite):
     def __init__(self, pos, cfg):
+        super().__init__()
         self.pos = pygame.Vector2(pos)
         self.image = pygame.image.load(enemy_cfg.enemy_sprite).convert_alpha()
         self.image = pygame.transform.scale(self.image, (enemy_cfg.enemy_width, enemy_cfg.enemy_height))
@@ -16,6 +17,7 @@ class Enemy:
         self.patrol_timer = 0.0
         self.patrol_index = 0
         self.cfg = cfg
+        game_cfg.enemy_objects.add(self)
 
 
     def handle_events(self, delta_time):
@@ -41,9 +43,15 @@ class Enemy:
                     if self.patrol_index >= len(self.cfg.enemy_patrol_positions) - 1:
                         self.patrol_index = 0
 
+        # Keep player on screen
+        self.rect.left = max(0, self.rect.left)
+        self.rect.right = min(game_cfg.window_width, self.rect.right)
+        self.rect.top = max(0, self.rect.top)
+        self.rect.bottom = min(game_cfg.window_height, self.rect.bottom)
 
-    def draw(self, screen):
-        screen.blit(self.image, self.rect)
+
+    #def draw(self, screen):
+        #screen.blit(self.image, self.rect)
 
     def is_off_screen(self, screen_width, screen_height):
         if (self.pos.x < 0 or self.pos.x > screen_width or
@@ -51,5 +59,5 @@ class Enemy:
             game_cfg.objects_to_remove.append(self)
     
     def defeated(self):
-        game_cfg.objects_to_remove.append(self)
+        self.kill()
         #particles = game_cfg.create_particles(self.pos, enemy_cfg.particle_count)#game_cfg.objects_to_instace.extend(particles)

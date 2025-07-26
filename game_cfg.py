@@ -15,9 +15,13 @@ background_image = None
 background_rect = None
 
 #Game Objects lists
-instanced_objects = []  # List to hold game objects
-objects_to_instace = []  # List to hold objects to be instantiated
-objects_to_remove = []  # List to hold objects to be removed
+instanced_objects = pygame.sprite.Group()  # Group to hold all game objects that are currently active
+player_object = pygame.sprite.GroupSingle()  # Group to hold the player object
+enemy_objects = pygame.sprite.Group()  # Group to hold all enemy objects
+player_bullet = pygame.sprite.Group()  # Group to hold player bullets
+enemy_bullet = pygame.sprite.Group()  # Group to hold enemy bullets
+
+
 
 def get_resource_path(relative_path):
 
@@ -43,24 +47,21 @@ def handle_events(delta_time):
 
 #Game Update loop
 def update(delta_time):
-    for gameobject in instanced_objects:
-        gameobject.update(delta_time)
+    #for gameobject in instanced_objects:
+        #gameobject.update(delta_time)
 
-    # Add new objects to the game
-    for obj in objects_to_instace:
-        if obj not in instanced_objects:
-            instanced_objects.append(obj)
+    instanced_objects.update(delta_time)  # Update all active game objects
 
-    # Clear the instancing list
-    objects_to_instace.clear()
-    
-    # Remove objects that are marked for removal
-    for obj in objects_to_remove:
-        if obj in instanced_objects:
-            instanced_objects.remove(obj)
-    
-    # Clear the removal list
-    objects_to_remove.clear()
+    bullet_enemy_collisions = pygame.sprite.groupcollide(player_bullet, enemy_objects, True, True)
+    bullet_player_collisions = pygame.sprite.groupcollide(enemy_bullet, player_object, True, True)
+
+    for bullet, enemies in bullet_enemy_collisions.items():
+        for enemy in enemies:
+            print(f"Bullet hit enemy: {enemy} at {enemy.rect.center}")
+
+    for bullet, players in bullet_player_collisions.items():
+        for player in players:
+            print(f"Enemy bullet hit player: {player} at {player.rect.center}")
 
 #Game Render loop
 def render(screen):
@@ -71,8 +72,7 @@ def render(screen):
     
     screen.blit(background_image, background_rect)
 
-    for gameobject in instanced_objects:
-        gameobject.draw(screen)
+    instanced_objects.draw(screen)  # Draw all active game objects
 
     # Update the display
     pygame.display.flip()
