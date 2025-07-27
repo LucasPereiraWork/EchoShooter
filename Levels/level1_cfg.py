@@ -13,6 +13,15 @@ class Level1Config:
         self.player_start_pos = (game_cfg.window_width / 2, game_cfg.window_height / 2)
         self.enemy_spawn_positions = [
             (100, 100),
+            (400, 250),
+            (700, 400),
+            (300, 600),
+            (500, 150),
+            (800, 350),
+            (200, 450),
+            (600, 550),
+            (900, 200),
+            (400, 500)
         ]
         self.enemy_count = len(self.enemy_spawn_positions)
         self.level_music = game_cfg.get_resource_path("Resources/Music/768402__sorlandal__electro-radioeffect_145.aiff")
